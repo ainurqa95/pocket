@@ -19,6 +19,11 @@ func main() {
 	// only after authorization
 	accessTokenRes, err := client.authAndFinalAccessToken(token)
 	fmt.Println(accessTokenRes, err)
+	err = client.addItem(AddInput{
+		accessToken: accessTokenRes.accessToken,
+		url:         "https://github.com",
+	})
+	fmt.Println(err)
 }
 
 ```
