@@ -32,7 +32,7 @@ func NewPocketClient(consumerKey string) *PocketClient {
 	return &PocketClient{consumerKey: consumerKey}
 }
 
-func (client *PocketClient) getRequestToken(redirectUri string) (string, error) {
+func (client *PocketClient) GetRequestToken(redirectUri string) (string, error) {
 	requestUrl := host + requestTokenUri
 
 	body := map[string]string{
@@ -48,7 +48,7 @@ func (client *PocketClient) getRequestToken(redirectUri string) (string, error) 
 	return codeBody["code"], err
 }
 
-func (client *PocketClient) getAuthorizationUrl(tokenCode string, redirectUri string) (string, error) {
+func (client *PocketClient) DefineAuthorizationUrl(tokenCode string, redirectUri string) (string, error) {
 	if tokenCode == "" || redirectUri == "" {
 		return "", errors.New("empty params")
 	}
@@ -61,7 +61,7 @@ type AccesTokenResponse struct {
 	username    string
 }
 
-func (client *PocketClient) authAndFinalAccessToken(tokenCode string) (*AccesTokenResponse, error) {
+func (client *PocketClient) AuthAndGetAccessToken(tokenCode string) (*AccesTokenResponse, error) {
 	reqUrl := host + authUri
 	body := map[string]string{
 		"consumer_key": client.consumerKey,
@@ -104,7 +104,7 @@ func (addInput *AddInput) validate() error {
 	return nil
 }
 
-func (client *PocketClient) addItem(addInput AddInput) error {
+func (client *PocketClient) AddItem(addInput AddInput) error {
 	err := addInput.validate()
 	if err != nil {
 		return err
@@ -155,4 +155,22 @@ func (client *PocketClient) makeRequest(url string, reqBody map[string]string) (
 	json.Unmarshal([]byte(respBody), &resultBody)
 
 	return resultBody, nil
+}
+
+func main() {
+	client := NewPocketClient(consumerKey)
+	token, err := client.getRequestToken("pocketapp1234:authorizationFinished")
+	fmt.Println(token, err)
+	authUrl, err := client.getAuthorizationUrl(token, "https://example.com")
+	fmt.Println(authUrl, err)
+	time.Sleep(30 * time.Second)
+	// only after authorization
+	accessTokenRes, err := client.authAndFinalAccessToken(token)
+	fmt.Println(accessTokenRes, err)
+	err = client.addItem(AddInput{
+		accessToken: accessTokenRes.accessToken,
+		url:         "https://github.com/ainurqa95",
+	})
+	fmt.Println(err)
+
 }
