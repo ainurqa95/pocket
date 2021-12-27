@@ -156,21 +156,3 @@ func (client *PocketClient) makeRequest(url string, reqBody map[string]string) (
 
 	return resultBody, nil
 }
-
-func main() {
-	client := NewPocketClient(consumerKey)
-	token, err := client.getRequestToken("pocketapp1234:authorizationFinished")
-	fmt.Println(token, err)
-	authUrl, err := client.getAuthorizationUrl(token, "https://example.com")
-	fmt.Println(authUrl, err)
-	time.Sleep(30 * time.Second)
-	// only after authorization
-	accessTokenRes, err := client.authAndFinalAccessToken(token)
-	fmt.Println(accessTokenRes, err)
-	err = client.addItem(AddInput{
-		accessToken: accessTokenRes.accessToken,
-		url:         "https://github.com/ainurqa95",
-	})
-	fmt.Println(err)
-
-}
