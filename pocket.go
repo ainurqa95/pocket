@@ -86,18 +86,18 @@ func (client *PocketClient) AuthAndGetAccessToken(tokenCode string) (*AccesToken
 }
 
 type AddInput struct {
-	url         string
-	accessToken string
-	title       string
-	tags        []string
-	tweet_id    string
+	Url         string
+	AccessToken string
+	Title       string
+	Tags        []string
+	Tweet_id    string
 }
 
 func (addInput *AddInput) validate() error {
-	if addInput.accessToken == "" {
+	if addInput.AccessToken == "" {
 		return errors.New("Add input request token is empty")
 	}
-	if addInput.url == "" {
+	if addInput.Url == "" {
 		return errors.New("Add input url is empty")
 	}
 
@@ -112,11 +112,11 @@ func (client *PocketClient) AddItem(addInput AddInput) error {
 	reqUrl := host + addUri
 	body := map[string]string{
 		"consumer_key": client.consumerKey,
-		"access_token": addInput.accessToken,
-		"title":        addInput.title,
-		"url":          addInput.url,
-		"tags":         strings.Join(addInput.tags, ", "),
-		"tweet_id":     addInput.tweet_id,
+		"access_token": addInput.AccessToken,
+		"title":        addInput.Title,
+		"url":          addInput.Url,
+		"tags":         strings.Join(addInput.Tags, ", "),
+		"tweet_id":     addInput.Tweet_id,
 	}
 
 	_, err = client.makeRequest(reqUrl, body)
