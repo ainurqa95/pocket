@@ -20,7 +20,7 @@ func main() {
 	accessTokenRes, err := client.AuthAndGetAccessToken(token)
 	fmt.Println(accessTokenRes, err)
 	err = client.AddItem(AddInput{
-		AccessToken: accessTokenRes.accessToken,
+		AccessToken: accessTokenRes.AccessToken,
 		Url:         "https://github.com",
 	})
 	fmt.Println(err)
