@@ -1,3 +1,3 @@
-module github.com/ainurqa95/pocket/v2
+module github.com/ainurqa95/pocket/v3
 
 go 1.15

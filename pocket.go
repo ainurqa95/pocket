@@ -57,8 +57,8 @@ func (client *PocketClient) DefineAuthorizationUrl(tokenCode string, redirectUri
 }
 
 type AccesTokenResponse struct {
-	accessToken string
-	username    string
+	AccessToken string
+	Username    string
 }
 
 func (client *PocketClient) AuthAndGetAccessToken(tokenCode string) (*AccesTokenResponse, error) {
@@ -79,8 +79,8 @@ func (client *PocketClient) AuthAndGetAccessToken(tokenCode string) (*AccesToken
 	}
 
 	return &AccesTokenResponse{
-		accessToken: accessTokenResp["access_token"],
-		username:    accessTokenResp["username"],
+		AccessToken: accessTokenResp["access_token"],
+		Username:    accessTokenResp["username"],
 	}, nil
 
 }
