@@ -11,7 +11,6 @@ import (
 	"time"
 )
 
-const consumerKey = "99907-059c27eeb9c6dbfd43d936f0"
 const (
 	host            = "https://getpocket.com/v3/"
 	requestTokenUri = "oauth/request"
